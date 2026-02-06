@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Overview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #141b2b;
+            --accent-gold: #d4a574;
+            --accent-blue: #4a90e2;
+            --text-primary: #e8e8e8;
+            --text-secondary: #9ba3b4;
+            --border-color: #2a3548;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Pro', serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 3rem 2rem;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(74, 144, 226, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(212, 165, 116, 0.05) 0%, transparent 50%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        header {
+            margin-bottom: 3rem;
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+        }
+
+        .table-wrapper {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            animation: scaleIn 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #1a2332 0%, #0f1620 100%);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        th {
+            padding: 1.25rem 1.5rem;
+            text-align: left;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        th:first-child {
+            border-top-left-radius: 12px;
+        }
+
+        th:last-child {
+            border-top-right-radius: 12px;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            animation: fadeInRow 0.5s ease-out both;
+        }
+
+        tbody tr:nth-child(1) { animation-delay: 0.1s; }
+        tbody tr:nth-child(2) { animation-delay: 0.15s; }
+        tbody tr:nth-child(3) { animation-delay: 0.2s; }
+        tbody tr:nth-child(4) { animation-delay: 0.25s; }
+        tbody tr:nth-child(5) { animation-delay: 0.3s; }
+        tbody tr:nth-child(n+6) { animation-delay: 0.35s; }
+
+        @keyframes fadeInRow {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        tbody tr:hover {
+            background: rgba(74, 144, 226, 0.05);
+            transform: scale(1.01);
+            box-shadow: inset 0 0 0 1px rgba(74, 144, 226, 0.1);
+        }
+
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        td {
+            padding: 1.25rem 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .name-cell {
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .count-cell {
+            font-family: 'DM Mono', monospace;
+            color: var(--accent-blue);
+            font-weight: 500;
+        }
+
+        .time-cell {
+            font-family: 'DM Mono', monospace;
+            color: var(--text-secondary);
+        }
+
+        .time-cell .hours {
+            display: inline-block;
+            min-width: 4rem;
+        }
+
+        .time-cell .unit {
+            opacity: 0.6;
+            font-size: 0.9em;
+            margin-left: 0.25rem;
+        }
+
+        .stats-footer {
+            display: flex;
+            gap: 2rem;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-top: 1px solid var(--border-color);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-item strong {
+            color: var(--accent-gold);
+            margin-right: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 2rem 1rem;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            th, td {
+                padding: 1rem;
+                font-size: 0.95rem;
+            }
+
+            .stats-footer {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Load Supabase JS from CDN -->
+    <script type="module">
+      var global_data;
+      import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+      // ✅ Replace with your own Supabase project credentials
+      const SUPABASE_URL = 'https://wzfsmgfqnexpqxpzgzwj.supabase.co';
+      const SUPABASE_ANON_KEY = 'sb_publishable_3wQadOvo943hyzfEqMJ0ag_K8eNR7tY';
+
+      // Create Supabase client
+      const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      async function readData() {
+        try {
+          // Example: Read all rows from the "users" table
+          const { data, error } = await supabase
+            .from('queue_metrics')   // Table name
+            .select('*');    // Select all columns
+
+          if (error) throw error;
+
+          //global_data = data;
+          //console.log(global_data);
+          //console.log(data);
+          populateTable(data);
+
+        } catch (err) {
+          //document.getElementById('output').textContent =
+          //  'Error: ' + err.message;
+        }
+      }
+
+
+      function populateTable2() {
+        readData();
+        // console.log(global_data);
+        // const jsonData = [
+        //     { gpu_name: "item_1", num_jobs: 42, mean_queue_time: 3.5, p90_queue_time: 2.8 },
+        //     { gpu_name: "item_2", num_jobs: 156, mean_queue_time: 7.2, p90_queue_time: 5.9 },
+        //     { gpu_name: "item_3", num_jobs: 89, mean_queue_time: 4.1, p90_queue_time: 3.3 },
+        //     { gpu_name: "item_4", num_jobs: 203, mean_queue_time: 12.6, p90_queue_time: 10.4 },
+        //     { gpu_name: "item_5", num_jobs: 67, mean_queue_time: 2.9, p90_queue_time: 2.1 }
+        // ];
+        // populateTable(jsonData);
+      }
+
+              // Name mapping: Replace internal names with readable names
+        const nameMapping = {
+            "cpu_only": "CPU only",
+            "h100_1": "1x H100",
+            "h100_2": "2x H100",
+            "h100_3": "3x H100",
+            "h100_4": "4x H100",
+            "l40_1": "1x L40",
+            "l40_2": "2x L40",
+            "l40_3": "3x L40",
+            "l40_4": "4x L40",
+            "l40s_1": "1x L40S",
+            "l40s_2": "2x L40S",
+            "l40s_3": "3x L40S",
+            "l40s_4": "4x L40S",
+            "mi210_1": "1x mi210",
+            "mi210_2": "2x mi210",
+            "mi210_3": "3x mi210",
+            "mi210_4": "4x mi210",
+            "mi300x_1": "1x mi300x",
+            "mi300x_2": "2x mi300x",
+            "mi300x_3": "3x mi300x",
+            "mi300x_4": "4x mi300x",
+        };
+
+        // Function to format hours
+        function formatHours(hours) {
+            //return hours;
+            if (hours == null) return "-";
+            return hours.toFixed(1);
+        }
+
+        // Function to get readable name
+        function getReadableName(internalName) {
+            return nameMapping[internalName] || internalName;
+        }
+
+        // Populate table
+        function populateTable(jsonData) {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+
+            let totalCount = 0;
+            let totalTimeA = 0;
+            let totalTimeB = 0;
+
+            jsonData.forEach(item => {
+                const row = document.createElement('tr');
+                console.log(item);
+                row.innerHTML = `
+                    <td class="name-cell">${getReadableName(item.gpu_name)}</td>
+                    <td class="count-cell">${item.num_jobs.toLocaleString()}</td>
+                    <td class="time-cell">
+                        <span class="hours">${formatHours(item.mean_queue_time)}</span>
+                        <span class="unit">hrs</span>
+                    </td>
+                    <td class="time-cell">
+                        <span class="hours">${formatHours(item.p90_queue_time)}</span>
+                        <span class="unit">hrs</span>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+
+                totalCount += item.count;
+                totalTimeA += item.time_a;
+                totalTimeB += item.time_b;
+            });
+
+        }
+
+        // Initialize table on page load
+        document.addEventListener('DOMContentLoaded', populateTable2);
+
+    </script>
+    
+    <div class="container">
+        <header>
+            <h1>uq gpu queue</h1>
+            <p class="subtitle">Performance Metrics</p>
+            <p class="subtitle">Job queue stats for the last 24 hours</p>
+        </header>
+
+        <div class="table-wrapper">
+            <table id="dataTable">
+                <thead>
+                    <tr>
+                        <th>GPU Resource</th>
+                        <th>Number of jobs started</th>
+                        <th>Mean queue time (hours)</th>
+                        <th>90th percentile queue time (hours)</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Data will be inserted here -->
+                </tbody>
+            </table>
+            <div class="stats-footer" id="statsFooter">
+                <!-- Stats will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+    </script>
+</body>
+</html>
