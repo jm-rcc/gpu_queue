@@ -250,7 +250,6 @@
       var global_data;
       import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-      // ✅ Replace with your own Supabase project credentials
       const SUPABASE_URL = 'https://wzfsmgfqnexpqxpzgzwj.supabase.co';
       const SUPABASE_ANON_KEY = 'sb_publishable_3wQadOvo943hyzfEqMJ0ag_K8eNR7tY';
 
@@ -259,16 +258,13 @@
 
       async function readData() {
         try {
-          // Example: Read all rows from the "users" table
+          // Example: Read all rows
           const { data, error } = await supabase
             .from('queue_metrics')   // Table name
             .select('*');    // Select all columns
 
           if (error) throw error;
 
-          //global_data = data;
-          //console.log(global_data);
-          //console.log(data);
           populateTable(data);
 
         } catch (err) {
@@ -280,15 +276,6 @@
 
       function populateTable2() {
         readData();
-        // console.log(global_data);
-        // const jsonData = [
-        //     { gpu_name: "item_1", num_jobs: 42, mean_queue_time: 3.5, p90_queue_time: 2.8 },
-        //     { gpu_name: "item_2", num_jobs: 156, mean_queue_time: 7.2, p90_queue_time: 5.9 },
-        //     { gpu_name: "item_3", num_jobs: 89, mean_queue_time: 4.1, p90_queue_time: 3.3 },
-        //     { gpu_name: "item_4", num_jobs: 203, mean_queue_time: 12.6, p90_queue_time: 10.4 },
-        //     { gpu_name: "item_5", num_jobs: 67, mean_queue_time: 2.9, p90_queue_time: 2.1 }
-        // ];
-        // populateTable(jsonData);
       }
 
               // Name mapping: Replace internal names with readable names
@@ -335,10 +322,6 @@
             const tbody = document.getElementById('tableBody');
             tbody.innerHTML = '';
 
-            let totalCount = 0;
-            let totalTimeA = 0;
-            let totalTimeB = 0;
-
             jsonData.forEach(item => {
                 const row = document.createElement('tr');
                 console.log(item);
@@ -356,10 +339,6 @@
                 `;
                 
                 tbody.appendChild(row);
-
-                totalCount += item.count;
-                totalTimeA += item.time_a;
-                totalTimeB += item.time_b;
             });
 
         }
@@ -371,8 +350,8 @@
     
     <div class="container">
         <header>
-            <h1>uq gpu queue</h1>
-            <p class="subtitle">Performance Metrics</p>
+            <h1>QueueTime</h1>
+            <p class="subtitle">GPU Metrics</p>
             <p class="subtitle">Job queue stats for the last 24 hours</p>
         </header>
 
@@ -380,7 +359,7 @@
             <table id="dataTable">
                 <thead>
                     <tr>
-                        <th>GPU Resource</th>
+                        <th>Resource</th>
                         <th>Number of jobs started</th>
                         <th>Mean queue time (hours)</th>
                         <th>90th percentile queue time (hours)</th>
@@ -396,8 +375,5 @@
         </div>
     </div>
 
-    <script>
-
-    </script>
 </body>
 </html>
